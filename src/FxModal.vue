@@ -1,14 +1,20 @@
 <template>
   <div class="fx-modals">
     <el-dialog
-      :custom-class="'fx-modal'"
+      :custom-class="'fx-modal '+modal.classes"
       v-for="modal in modal_list"
       :key="modal.id"
       :modal="modal.mask"
       :title="modal.title"
       :visible="modal.visible"
       :width="getModalWidth(modal)"
+      :append-to-body="modal.appendToBody"
+      :mask-append-to-body="modal.maskAppendToBody"
+      :destroyOnClose="modal.destroyOnClose"
+      :closeOnClickModal="modal.closeOnClickMask"
+      :fullscreen="modal.fullscreen"
       :before-close="getBeforeClose(modal)"
+      :lockScroll="modal.lockScroll"
       @close="onClose(modal)"
       @closed="onClosed(modal)"
     >
@@ -94,13 +100,19 @@ export default {
 
       if (!method) {
         this.onClose(modal);
+        callback && callback.call();
         return;
       }
 
       //弹窗内实例组件上下文对象
       const ctx = this.$refs[`modalComponent_${modal.id}`][0];
 
-      ctx && ctx[method] && ctx[method].call(null, callback);
+      if (ctx && ctx[method] && "function" === typeof ctx[method]) {
+        const bl = ctx[method].call(null, callback);
+        if (bl) {
+          this.onClose(modal);
+        }
+      }
     },
   },
 
@@ -108,4 +120,4 @@ export default {
 };
 </script>
 
-<style src="./style.scss" lang="scss" scoped></style>
+<style src="./style.scss" lang="scss"></style>

@@ -18,9 +18,25 @@ export default {
         id,
         title: "Modal_" + id,
         component: {
-          render: () => <div>AAA</div>,
+          render: () => {
+            return <div>AAA</div>;
+          },
+          methods: {
+            confirm(cb) {
+              cb("提交表单");
+              return true;
+            },
+          },
         },
-        btns: [],
+        btns: [
+          {
+            name: "确认",
+            method: "confirm",
+            callback(a) {
+              alert(a);
+            },
+          },
+        ],
       });
     },
   },

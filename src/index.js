@@ -1,4 +1,6 @@
 ﻿import FxModal from './FxModal.vue';
+import { merge } from './utils';
+import { DEFAULT_OPTIONS } from './config';
 
 function getModalByIndex(index, state) {
     return state.modal_list[index] || null;
@@ -13,10 +15,12 @@ function getIndexByModal(modal, state) {
 }
 
 FxModal.install = (Vue, opt = {}) => {
+    let { store, defaultOptions } = opt,
+        startModalId = 0;
+
     Vue.component(FxModal.name || 'FxModal', FxModal);
 
-    let { store } = opt,
-        startModalId = 0;
+    Vue.FxModal_defaultOptions = merge(DEFAULT_OPTIONS, defaultOptions);
 
     try {
         store.registerModule('fxModal', {
@@ -181,7 +185,7 @@ FxModal.install = (Vue, opt = {}) => {
      */
     Vue.prototype.$modal = (options, thisArg) => {
 
-        let { component, data, title, id, width, placement, actions, btns, beforeClose, open = true } = options;
+        let { component, data, title, id, width, closeOnClickMask, placement, lockScroll, fullscreen, classes, actions, appendToBody, closeOnClickModal, maskAppendToBody, btns, beforeClose, open, mask } = merge(Vue.FxModal_defaultOptions, options);
 
         //将回调函数的this指向绑定至调用方指定的对象上
         if (thisArg) {
@@ -214,6 +218,13 @@ FxModal.install = (Vue, opt = {}) => {
             actions,
             btns,
             beforeClose,
+            mask,
+            appendToBody,
+            maskAppendToBody,
+            fullscreen,
+            classes,
+            closeOnClickMask,
+            lockScroll,
         }
 
         //添加modal到store
