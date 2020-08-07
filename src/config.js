@@ -7,7 +7,7 @@ export const DEFAULT_OPTIONS = {
     data: null,
     title: "",
     width: '50%',
-    height: 'auto',
+    height: '',
     placement: 'center',
     actions: null,
     beforeClose: null,
@@ -18,5 +18,5 @@ export const DEFAULT_OPTIONS = {
     maskAppendToBody: true,
     lockScroll: true,
     closeOnClickMask: true,
-    classes: ""
+    classes: "",
 }

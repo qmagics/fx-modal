@@ -1,7 +1,8 @@
 const path = require('path');
+const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = [
     {
@@ -70,7 +71,9 @@ module.exports = [
 
             new ExtractTextPlugin({
                 filename: 'index.css'
-            })
+            }),
+
+            new BundleAnalyzerPlugin()
         ],
 
         externals: {

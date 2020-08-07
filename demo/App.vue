@@ -16,10 +16,14 @@ export default {
     openModal(id) {
       this.$modal({
         id,
-        title: "Modal_" + id,
+        title: "弹窗" + id,
         component: {
           render: () => {
-            return <div>AAA</div>;
+            return (
+              <div>
+                <p>AAA</p>
+              </div>
+            );
           },
           methods: {
             confirm(cb) {
@@ -32,6 +36,9 @@ export default {
           {
             name: "确认",
             method: "confirm",
+            type: "primary",
+            size: "small",
+            icon: "el-icon-check",
             callback(a) {
               alert(a);
             },
@@ -44,6 +51,10 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  margin: 0;
+  padding: 0;
+}
 .page {
 }
 </style>

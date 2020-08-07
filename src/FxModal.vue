@@ -1,13 +1,13 @@
 <template>
   <div class="fx-modals">
     <el-dialog
-      :custom-class="'fx-modal '+modal.classes"
+      :custom-class="getCustomClass(modal)"
       v-for="modal in modal_list"
       :key="modal.id"
       :modal="modal.mask"
+      top="0"
       :title="modal.title"
       :visible="modal.visible"
-      :width="getModalWidth(modal)"
       :append-to-body="modal.appendToBody"
       :mask-append-to-body="modal.maskAppendToBody"
       :destroyOnClose="modal.destroyOnClose"
@@ -17,6 +17,8 @@
       :lockScroll="modal.lockScroll"
       @close="onClose(modal)"
       @closed="onClosed(modal)"
+      v-drag
+      v-initSize="modal"
     >
       <div class="fx-modal__body">
         <component
@@ -31,8 +33,9 @@
         <el-button
           v-for="(btn,index) in modal.btns"
           :key="index"
-          size="mini"
+          :size="btn.size"
           :type="btn.type"
+          :icon="btn.icon"
           @click="onModalBtnClick(btn,modal)"
         >{{btn.name}}</el-button>
       </div>
@@ -42,8 +45,14 @@
 
 <script>
 import { mapState } from "vuex";
+import drag from "./directives/drag";
+import initSize from "./directives/initSize";
 
 export default {
+  directives: {
+    drag,
+    initSize,
+  },
   data() {
     return {
       globalDialog: {
@@ -60,19 +69,17 @@ export default {
   },
 
   methods: {
-    getModalWidth(modal) {
-      const { width, placement } = modal;
-      if (width) {
-        return width;
-      } else {
-        if (placement === "top-right") {
-          return "25vw";
-        } else if (placement === "center") {
-          return "45vw";
-        } else {
-          return "45vw";
-        }
+    getCustomClass(modal) {
+      let str = "fx-modal ";
+      const { placement = "center", classes } = modal;
+
+      if (classes) {
+        str += `${classes} `;
       }
+
+      str += `placement--${placement} `;
+
+      return str;
     },
 
     onClose(modal) {
