@@ -55,10 +55,10 @@ export default {
   },
   data() {
     return {
-      globalDialog: {
-        title: "Global Dialog",
-        visible: false,
-      },
+      // globalDialog: {
+      //   title: "Global Dialog",
+      //   visible: false,
+      // },
     };
   },
 

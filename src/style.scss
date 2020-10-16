@@ -1,5 +1,5 @@
 $header_height: 50px;
-$footer_height: 60px;
+$footer_height: 50px;
 
 .fx-modals {
 }
@@ -30,9 +30,9 @@ $footer_height: 60px;
     .el-dialog__footer {
         height: $footer_height;
         box-sizing: border-box;
-        background: rgb(248, 248, 248);
-        border-top: 1px solid #eee;
-        box-shadow: 0 -1px 2px 1px rgba(0, 0, 0, 0.05);
+        // background: rgb(248, 248, 248);
+        // border-top: 1px solid #eee;
+        // box-shadow: 0 -1px 2px 1px rgba(0, 0, 0, 0.05);
         padding: 0 20px;
         display: flex;
         justify-content: flex-end;
