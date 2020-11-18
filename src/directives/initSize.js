@@ -4,11 +4,22 @@ export default {
         const bodyW = document.body.clientWidth;
         let { placement, height, width } = binding.value;
 
-        if (typeof height === "string" && height.includes("%")) {
-            height = bodyH * (+height.replace(/\%/g, "") / 100);
+        if (typeof height === "string") {
+            if (height.includes("%")) {
+                height = bodyH * (+height.replace(/\%/g, "") / 100);
+            }
+            else {
+                height = parseFloat(height);
+            }
         }
-        if (typeof width === "string" && width.includes("%")) {
-            width = bodyW * (+width.replace(/\%/g, "") / 100);
+
+        if (typeof width === "string") {
+            if (width.includes("%")) {
+                width = bodyW * (+width.replace(/\%/g, "") / 100);
+            }
+            else {
+                width = parseFloat(width);
+            }
         }
 
         if (width > bodyW) {
